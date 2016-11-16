@@ -1,5 +1,5 @@
-#ifndef STATE_H
-# define STATE_H
+#ifndef PARSER__STATE_H
+# define PARSER__STATE_H
 
 # include "lemin_intern.h"
 

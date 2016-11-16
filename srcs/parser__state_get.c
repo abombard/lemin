@@ -107,4 +107,3 @@ extern t_state	state_get(const t_buf *s)
 	}
 	return (STATE_UNDEFINED);
 }
-

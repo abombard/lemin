@@ -1,7 +1,7 @@
 #include "lemin_intern.h"
 #include <stdlib.h>
 
-static bool	add_neighbor(t_room *room, t_room *n)
+static bool		add_neighbor(t_room *room, t_room *n)
 {
 	t_neighbor	*neighbor;
 
@@ -17,7 +17,7 @@ static bool	add_neighbor(t_room *room, t_room *n)
 	return (true);
 }
 
-static void	room_token_to_name(t_buf *token, char *name)
+static void		room_token_to_name(t_buf *token, char *name)
 {
 	if (token->size > ROOM_NAME_SIZE_MAX)
 	{
@@ -32,14 +32,13 @@ static void	room_token_to_name(t_buf *token, char *name)
 	}
 }
 
-extern bool	room_link(t_list *head, t_buf *room_name1, t_buf *room_name2)
+extern bool		room_link(t_list *head, t_buf *room_name1, t_buf *room_name2)
 {
 	t_room		*room1;
 	t_room		*room2;
 	t_room		*room;
 	t_list		*pos;
 
-	fprintf(stderr, "%s\n", __func__);
 	room_token_to_name(room_name1, room_name1->bytes);
 	room_token_to_name(room_name2, room_name2->bytes);
 	room1 = NULL;
@@ -53,11 +52,7 @@ extern bool	room_link(t_list *head, t_buf *room_name1, t_buf *room_name2)
 		if (!ft_strcmp(room->name, room_name2->bytes))
 			room2 = room;
 	}
-	if (room1 == NULL || room2 == NULL)
-	{
-		fprintf(stderr, "Try to link at least one Room that does not exists room1 %p room2 %p\n", room1, room2);
-		return (false);
-	}
+	ASSERT(room1 != NULL || room2 != NULL);
 	ASSERT(add_neighbor(room1, room2));
 	ASSERT(add_neighbor(room2, room1));
 	return (true);
@@ -82,7 +77,7 @@ extern t_room	*room_add(t_list *head, t_buf *token_array)
 	return (room);
 }
 
-extern void	rooms_del(t_list *head)
+extern void		rooms_del(t_list *head)
 {
 	t_room		*room;
 	t_neighbor	*n;

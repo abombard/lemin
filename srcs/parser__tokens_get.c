@@ -1,7 +1,8 @@
 #include "parser__tokens_get.h"
 #include "lemin_intern.h"
 
-static bool		get_next_token(char *buf, size_t buf_size, size_t *start, size_t *size)
+static bool		get_next_token(char *buf, size_t buf_size,
+							size_t *start, size_t *size)
 {
 	size_t	i;
 
@@ -45,4 +46,3 @@ extern size_t	tokens_get(char *buf, size_t buf_size, t_buf *token_array)
 	}
 	return (token_count);
 }
-

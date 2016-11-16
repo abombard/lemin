@@ -26,7 +26,7 @@ static bool	stream_read(t_stream *s)
 	return (true);
 }
 
-extern bool	get_next_line(t_stream	*s, t_buf *line)
+extern bool	get_next_line(t_stream *s, t_buf *line)
 {
 	char	*pt;
 
@@ -49,11 +49,10 @@ extern bool	get_next_line(t_stream	*s, t_buf *line)
 			s->size_left = 0;
 			line->size = s->size;
 			return (true);
-		} 
+		}
 	}
 	s->size = (size_t)(pt + 1 - s->buf);
 	s->size_left -= s->size;
 	line->size = s->size - 1;
 	return (true);
 }
-

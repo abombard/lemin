@@ -15,7 +15,7 @@ LIBS=-L $(DIR_PRINTF) -lprintf -L $(DIR_LIBFT) -lft -L $(DIR_LIST) -llist
 SRC_DIR=srcs
 INCLUDES=-I ./ -I ./includes -I $(DIR_LIBFT) -I $(DIR_LIST) -I $(DIR_PRINTF)
 
-BUILD_DIR= __build
+BUILD_DIR=__build
 
 SRC=\
 	lemin.c\
@@ -26,6 +26,9 @@ SRC=\
 	parser__tokens_get.c\
 	lemin__room.c\
 	lemin__room_show.c\
+	rate_graph.c\
+	path.c\
+	get_paths.c\
 
 
 OBJ=$(addprefix $(BUILD_DIR)/,$(SRC:.c=.o))
@@ -41,9 +44,9 @@ exec:
 	@make -C $(DIR_LIST)
 
 $(BUILD_DIR)/%.o:$(SRC_DIR)/%.c
-	@$(CC) $(FLAGS) -fPIC -c $< -o $@ $(INCLUDES)
+	@$(CC) $(FLAGS) -c $< -o $@ $(INCLUDES)
 
-$(NAME):exec $(OBJ)
+$(NAME): exec $(OBJ)
 	@$(CC) $(FLAGS) $(OBJ) $(LIBS) -o $@
 	@echo "$@ was created"
 
