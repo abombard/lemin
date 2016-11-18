@@ -67,16 +67,16 @@ static bool		is_tube(const t_buf *s)
 	int	i;
 
 	i = 0;
-	if (!ft_isdigit(s->bytes[i]))
+	if (ft_isspace(s->bytes[i]))
 		return (false);
-	while (ft_isdigit(s->bytes[i]))
+	while (i < s->size && s->bytes[i] != '-')
 		i++;
-	if (s->bytes[i] != '-')
+	if (i == s->size)
 		return (false);
 	i++;
-	if (!ft_isdigit(s->bytes[i]))
+	if (i == s->size)
 		return (false);
-	while (ft_isdigit(s->bytes[i]))
+	while (i < s->size)
 		i++;
 	return (i == s->size ? true : false);
 }

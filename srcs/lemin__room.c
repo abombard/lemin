@@ -73,6 +73,7 @@ extern t_room	*room_add(t_list *head, t_buf *token_array)
 	room->path_index = -1;
 	INIT_LIST_HEAD(&room->path);
 	room->taken = false;
+	room->ant_id = 0;
 	list_add_tail(&room->list, head);
 	return (room);
 }

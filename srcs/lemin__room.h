@@ -20,6 +20,8 @@ typedef struct	s_room
 	t_list	path;
 
 	bool	taken;
+
+	int		ant_id;
 }				t_room;
 
 typedef struct	s_neighbor

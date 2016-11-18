@@ -30,7 +30,6 @@ typedef struct	s_path
 
 extern bool		get_paths(t_room *start, t_room *end, t_list *paths);
 extern void		free_path(t_list *path);
-extern void		paths_del(t_list *paths);
 extern void		path_show(t_list *path);
 extern void		paths_show(t_list *paths);
 

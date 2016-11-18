@@ -15,20 +15,6 @@ extern void	free_path(t_list *path)
 	list_del(path);
 }
 
-extern void	paths_del(t_list *paths)
-{
-	t_path	*path;
-	t_list	*pos;
-
-	while (!list_empty(paths))
-	{
-		pos = paths->next;
-		path = CONTAINER_OF(pos, t_path, list);
-		list_del(&path->list);
-		free(path);
-	}
-}
-
 extern void	path_show(t_list *path)
 {
 	t_room	*room;
