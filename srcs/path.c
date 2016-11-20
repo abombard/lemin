@@ -25,7 +25,7 @@ extern void	path_show(t_list *path)
 	while ((pos = pos->next) && pos != path)
 	{
 		room = CONTAINER_OF(pos, t_room, path);
-		fprintf(stderr, " %s", room->name);
+		fprintf(stderr, " %s {%d}", room->name, room->path_index);
 	}
 	fprintf(stderr, "\n");
 }

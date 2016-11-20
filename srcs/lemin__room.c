@@ -5,7 +5,6 @@ static bool		add_neighbor(t_room *room, t_room *n)
 {
 	t_neighbor	*neighbor;
 
-	fprintf(stderr, "%s\n", __func__);
 	neighbor = (t_neighbor *)malloc(sizeof(t_neighbor));
 	if (neighbor == NULL)
 	{
@@ -62,7 +61,6 @@ extern t_room	*room_add(t_list *head, t_buf *token_array)
 {
 	t_room	*room;
 
-	fprintf(stderr, "%s\n", __func__);
 	room = (t_room *)malloc(sizeof(t_room));
 	if (room == NULL)
 		return (NULL);
@@ -84,7 +82,6 @@ extern void		rooms_del(t_list *head)
 	t_neighbor	*n;
 	t_list		*neighbors;
 
-	fprintf(stderr, "%s\n", __func__);
 	while (head->next != head)
 	{
 		room = CONTAINER_OF(head->next, t_room, list);
