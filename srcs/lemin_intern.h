@@ -20,7 +20,7 @@ typedef struct	s_lemin
 
 extern bool		parser(int fd, t_lemin *lemin);
 
-extern void		rate_graph(t_room *start);
+extern void		rate_graph(t_room *start, t_room *end);
 
 typedef struct	s_path
 {

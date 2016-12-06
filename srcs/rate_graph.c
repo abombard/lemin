@@ -1,6 +1,9 @@
 #include "lemin_intern.h"
 
-static void	rate_neighbors(t_list *neighbors, int path_index, t_list *next)
+static void	rate_neighbors(t_list *neighbors,
+						int path_index,
+						t_list *next,
+						t_room *end)
 {
 	t_neighbor	*neighbor;
 	t_room		*room;
@@ -11,14 +14,14 @@ static void	rate_neighbors(t_list *neighbors, int path_index, t_list *next)
 	{
 		neighbor = CONTAINER_OF(pos, t_neighbor, list);
 		room = neighbor->room;
-		if (room->path_index != -1)
+		if (room->path_index != -1 || room == end)
 			continue ;
 		room->path_index = path_index;
-		list_add_tail(&room->path, next);
+		list_add(&room->path, next);
 	}
 }
 
-extern void	rate_graph(t_room *start)
+extern void	rate_graph(t_room *start, t_room *end)
 {
 	t_room	*room;
 	t_list	cur;
@@ -38,7 +41,7 @@ extern void	rate_graph(t_room *start)
 		while ((pos = pos->next) && pos != &cur)
 		{
 			room = CONTAINER_OF(pos, t_room, path);
-			rate_neighbors(&room->neighbors, path_index, &next);
+			rate_neighbors(&room->neighbors, path_index, &next, end);
 		}
 		path_index += 1;
 	}

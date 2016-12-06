@@ -76,11 +76,8 @@ static bool	lemin(void)
 	fprintf(stderr, "Ok!\n");
 
 	fprintf(stderr, "Rating each Room of the Graph: ");
-	rate_graph(lemin.start);
+	rate_graph(lemin.end, lemin.start);
 	fprintf(stderr, "Ok!\n");
-
-	ASSERT(lemin.start->path_index != -1);
-	ASSERT(lemin.end->path_index != -1);
 
 	fprintf(stderr, "STARTING ROOM:\n");
 	room_show(lemin.start);
@@ -90,8 +87,11 @@ static bool	lemin(void)
 	fprintf(stderr,"LIST ROOM\n");
 	rooms_show(&lemin.rooms);
 
+	lemin.start->path_index = lemin.ant_count;
+
 	fprintf(stderr, "Calculating all possible paths: ");
 	ASSERT(get_paths(lemin.start, lemin.end, &paths));
+	ASSERT(list_len(&paths) > 0);
 	fprintf(stderr, "Ok!\n");
 
 	fprintf(stderr, "Possible paths are:\n");

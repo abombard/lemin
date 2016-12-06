@@ -7,7 +7,7 @@ extern void	room_show(t_room *room)
 	t_room		*r;
 	t_list		*pos;
 
-	ft_printf("Room {%s}:\nPos %d %d\nPath Index: %d\nNeighbors:",
+	ft_fprintf(2, "Room {%s}:\nPos %d %d\nPath Index: %d\nNeighbors:",
 			room->name, room->x, room->y, room->path_index);
 	pos = &room->neighbors;
 	while ((pos = pos->next) && pos != &room->neighbors)

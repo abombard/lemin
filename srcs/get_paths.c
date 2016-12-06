@@ -1,6 +1,6 @@
 #include "lemin_intern.h"
 
-static bool	get_path(t_room *room_cur, t_room *start, t_list *path)
+static bool	get_path(t_room *room_cur, t_room *end, t_list *path)
 {
 	t_room		*room_iter;
 	t_room		*room_next;
@@ -10,10 +10,10 @@ static bool	get_path(t_room *room_cur, t_room *start, t_list *path)
 
 	if (room_cur == NULL)
 		return (false);
-	if (room_cur == start)
+	if (room_cur == end)
 		return (true);
 	room_cur->taken = true;
-	list_add(&room_cur->path, path);
+	list_add_tail(&room_cur->path, path);
 	lower_path_index = 2000000;
 	room_next = NULL;
 	pos = &room_cur->neighbors;
@@ -23,13 +23,13 @@ static bool	get_path(t_room *room_cur, t_room *start, t_list *path)
 		room_iter = neighbor->room;
 		if (room_iter->taken == true)
 			continue ;
-		if (room_iter->path_index < lower_path_index)
+		if (room_iter->path_index <= lower_path_index)
 		{
 			lower_path_index = room_iter->path_index;
 			room_next = room_iter;
 		}
 	}
-	if (get_path(room_next, start, path))
+	if (get_path(room_next, end, path))
 		return (true);
 	list_del(&room_cur->path);
 	room_cur->taken = false;
@@ -50,12 +50,12 @@ extern bool	get_paths(t_room *start, t_room *end, t_list *paths)
 			return (false);
 		}
 		INIT_LIST_HEAD(&new_path->head);
-		if (!get_path(end, start, &new_path->head))
+		if (!get_path(start, end, &new_path->head))
 		{
 			free(new_path);
 			break ;
 		}
-		list_del(new_path->head.prev);
+		list_del(new_path->head.next);
 		list_add_tail(&new_path->list, paths);
 	}
 	return (true);
