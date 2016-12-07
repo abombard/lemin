@@ -42,7 +42,7 @@ extern bool	get_next_line(t_stream *s, t_buf *line)
 		if (pt == NULL)
 		{
 			if (s->size_left == s->buf_size)
-				FATAL("Line too big {%.*s}\n", (int)s->size, s->buf);
+				FATAL("Line too big\n");
 			s->size = s->size_left;
 			s->size_left = 0;
 			line->size = s->size;

@@ -77,6 +77,7 @@ static bool	lemin(void)
 	INIT_LIST_HEAD(&lemin.rooms);
 	//fprintf(stderr, "Parsing file and Building Lemin structure: ");
 	ASSERT(parser(0, &lemin));
+	ft_printf("\n");
 	if (lemin.ant_count <= 0)
 		FATAL("Ant count %d\n", lemin.ant_count);
 	if (lemin.start == NULL || lemin.end == NULL)
