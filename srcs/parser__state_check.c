@@ -1,5 +1,4 @@
 #include "parser__state.h"
-#include <stdio.h>
 
 static bool	check_state_undefined(t_state new_state)
 {

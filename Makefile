@@ -22,6 +22,7 @@ SRC=\
 	parser.c\
 	parser__stream.c\
 	parser__state_get.c\
+	parser__state_get_utils.c\
 	parser__state_check.c\
 	parser__tokens_get.c\
 	lemin__room.c\

@@ -6,8 +6,6 @@
 # include "ft_printf.h"
 # include <stdbool.h>
 
-# include <stdio.h>
-
 # include "lemin__room.h"
 
 typedef struct	s_lemin

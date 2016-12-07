@@ -36,15 +36,13 @@ extern bool	get_next_line(t_stream *s, t_buf *line)
 	pt = ft_memchr(s->buf, '\n', s->size_left);
 	if (pt == NULL)
 	{
-		ASSERT(stream_read(s));
+		if (!stream_read(s))
+			return (false);
 		pt = ft_memchr(s->buf, '\n', s->size_left);
 		if (pt == NULL)
 		{
 			if (s->size_left == s->buf_size)
-			{
-				fprintf(stderr, "Line too big\n");
-				return (false);
-			}
+				FATAL("Line too big {%.*s}\n", (int)s->size, s->buf);
 			s->size = s->size_left;
 			s->size_left = 0;
 			line->size = s->size;

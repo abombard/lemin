@@ -18,11 +18,12 @@ static char	*state_to_string(t_state state)
 	};
 
 	if (state > STATE_COMMENT)
-		return "Unknown State";
+		return ("Unknown State");
 	return (array[state]);
 }
 
-static bool	build_lemin(t_buf *token_array, t_state state, t_state new_state, t_lemin *lemin)
+static bool	build_lemin(t_buf *token_array,
+		t_state state, t_state new_state, t_lemin *lemin)
 {
 	t_room	*room;
 
@@ -51,25 +52,22 @@ extern bool	parser(int fd, t_lemin *lemin)
 	t_stream	stream;
 	t_buf		line;
 	t_buf		token_array[TOKEN_COUNT_MAX];
-	t_state		state, new_state;
+	t_state		state;
+	t_state		new_state;
 
 	state = STATE_UNDEFINED;
 	stream_init(&stream, fd);
 	while (get_next_line(&stream, &line))
 	{
+		ft_printf("%.*s\n", (int)line.size, line.bytes);
 		new_state = state_get(&line);
 		if (new_state == STATE_UNDEFINED)
-		{
-			fprintf(stderr, "Invalid line {%.*s}\n", (int)line.size, line.bytes);
-			return (false);
-		}
+			FATAL("Invalid line {%.*s}\n", (int)line.size, line.bytes);
 		if (new_state == STATE_COMMENT)
 			continue ;
 		if (!check_state(state, new_state))
-		{
-			fprintf(stderr, "state %s new_state %s\n", state_to_string(state), state_to_string(new_state));
-			return (false);
-		}
+			FATAL("state %s new_state %s\n",
+				state_to_string(state), state_to_string(new_state));
 		ASSERT(tokens_get(line.bytes, line.size, token_array) > 0);
 		ASSERT(build_lemin(token_array, state, new_state, lemin));
 		state = new_state;

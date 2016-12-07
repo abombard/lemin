@@ -1,5 +1,6 @@
 #include "lemin_intern.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static bool		add_neighbor(t_room *room, t_room *n)
 {

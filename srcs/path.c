@@ -5,7 +5,6 @@ extern void	free_path(t_list *path)
 	t_room	*room;
 	t_list	*pos;
 
-	fprintf(stderr, "%s\n", __func__);
 	pos = path;
 	while ((pos = pos->next) && pos != path)
 	{
@@ -20,14 +19,14 @@ extern void	path_show(t_list *path)
 	t_room	*room;
 	t_list	*pos;
 
-	fprintf(stderr, "New path:");
+	ft_fprintf(2, "New path:");
 	pos = path;
 	while ((pos = pos->next) && pos != path)
 	{
 		room = CONTAINER_OF(pos, t_room, path);
-		fprintf(stderr, " %s {%d}", room->name, room->path_index);
+		ft_fprintf(2, " %s {%d}", room->name, room->path_index);
 	}
-	fprintf(stderr, "\n");
+	ft_fprintf(2, "\n");
 }
 
 extern void	paths_show(t_list *paths)
@@ -35,7 +34,7 @@ extern void	paths_show(t_list *paths)
 	t_path	*path;
 	t_list	*pos;
 
-	fprintf(stderr, "%s\n", __func__);
+	ft_fprintf(2, "%s\n", __func__);
 	pos = paths;
 	while ((pos = pos->next) && pos != paths)
 	{

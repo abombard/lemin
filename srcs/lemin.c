@@ -1,5 +1,15 @@
 #include "lemin_intern.h"
 
+static void	int_cross_road(t_room *room_cur, t_room *room_next,
+		t_room *end, bool *on_the_road)
+{
+	if (room_next != end)
+		*on_the_road = true;
+	room_next->ant_id = room_cur->ant_id;
+	room_cur->ant_id = 0;
+	ft_printf("L%d-%s ", room_next->ant_id, room_next->name);
+}
+
 static bool	cross_road(t_list *path, t_room *end, int ant_id)
 {
 	t_room	*room_cur;
@@ -16,17 +26,14 @@ static bool	cross_road(t_list *path, t_room *end, int ant_id)
 		if (room_cur->ant_id == 0)
 			continue ;
 		room_next = CONTAINER_OF(pos->next, t_room, path);
-		if (room_next != end)
-			on_the_road = true;
-		room_next->ant_id = room_cur->ant_id;
-		room_cur->ant_id = 0;
-		fprintf(stdout, "L%d-%s ", room_next->ant_id, room_next->name);
+		int_cross_road(room_cur, room_next, end, &on_the_road);
 	}
 	if (ant_id != 0)
 	{
 		on_the_road = true;
-		fprintf(stdout, "L%d-%s ", ant_id, room_cur->name);
+		ft_printf("L%d-%s ", ant_id, room_cur->name);
 	}
+	ft_printf("\n");
 	room_cur->ant_id = ant_id;
 	list_del(&end->path);
 	return (on_the_road);
@@ -56,7 +63,6 @@ static void	cross_roads(t_list *paths, t_room *end, int ant_count)
 			else
 				ant_id += 1;
 		}
-		fprintf(stdout, "\n");
 	}
 }
 
@@ -69,40 +75,26 @@ static bool	lemin(void)
 	lemin.start = NULL;
 	lemin.end = NULL;
 	INIT_LIST_HEAD(&lemin.rooms);
-
-	fprintf(stderr, "Parsing file and Building Lemin structure: ");
+	//fprintf(stderr, "Parsing file and Building Lemin structure: ");
 	ASSERT(parser(0, &lemin));
-	ASSERT(lemin.start != NULL && lemin.end != NULL);
-	fprintf(stderr, "Ok!\n");
-
-	fprintf(stderr, "Rating each Room of the Graph: ");
+	if (lemin.ant_count <= 0)
+		FATAL("Ant count %d\n", lemin.ant_count);
+	if (lemin.start == NULL || lemin.end == NULL)
+		FATAL("Need a ##start and an ##end node\n");
+	//fprintf(stderr, "Rating each Room of the Graph: ");
 	rate_graph(lemin.end, lemin.start);
-	fprintf(stderr, "Ok!\n");
-
-	fprintf(stderr, "STARTING ROOM:\n");
-	room_show(lemin.start);
-	fprintf(stderr, "END ROOM:\n");
-	room_show(lemin.end);
-
-	fprintf(stderr,"LIST ROOM\n");
-	rooms_show(&lemin.rooms);
-
 	lemin.start->path_index = lemin.ant_count;
-
-	fprintf(stderr, "Calculating all possible paths: ");
+	//fprintf(stderr, "Calculating all possible paths: ");
 	ASSERT(get_paths(lemin.start, lemin.end, &paths));
-	ASSERT(list_len(&paths) > 0);
-	fprintf(stderr, "Ok!\n");
-
-	fprintf(stderr, "Possible paths are:\n");
+	if (list_len(&paths) <= 0)
+		FATAL("Found no possible path\n");
+	/*
+ 	fprintf(stderr, "Possible paths are:\n");
 	paths_show(&paths);
-
-	fprintf(stderr, "Cross roads\n");
+	*/
+	//fprintf(stderr, "Cross roads\n");
 	cross_roads(&paths, lemin.end, lemin.ant_count);
-	fprintf(stderr, "Ok!\n");
-
 	rooms_del(&lemin.rooms);
-
 	return (true);
 }
 

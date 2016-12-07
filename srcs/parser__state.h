@@ -14,7 +14,19 @@ typedef enum	e_state
 	STATE_TUBE,
 }				t_state;
 
+struct			s_state
+{
+	t_state	state;
+	bool	(*test)(const t_buf *);
+};
+
 extern t_state	state_get(const t_buf *s);
 extern bool		check_state(t_state state, t_state new_state);
+
+bool			is_comment(const t_buf *s);
+bool			is_ant_count(const t_buf *s);
+bool			is_room(const t_buf *s);
+bool			is_start(const t_buf *s);
+bool			is_end(const t_buf *s);
 
 #endif
