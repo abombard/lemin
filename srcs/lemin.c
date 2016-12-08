@@ -75,31 +75,23 @@ static bool	lemin(void)
 	lemin.start = NULL;
 	lemin.end = NULL;
 	INIT_LIST_HEAD(&lemin.rooms);
-	//fprintf(stderr, "Parsing file and Building Lemin structure: ");
 	ASSERT(parser(0, &lemin));
 	ft_printf("\n");
 	if (lemin.ant_count <= 0)
 		FATAL("Ant count %d\n", lemin.ant_count);
 	if (lemin.start == NULL || lemin.end == NULL)
 		FATAL("Need a ##start and an ##end node\n");
-	//fprintf(stderr, "Rating each Room of the Graph: ");
 	rate_graph(lemin.end, lemin.start);
 	lemin.start->path_index = lemin.ant_count;
-	//fprintf(stderr, "Calculating all possible paths: ");
 	ASSERT(get_paths(lemin.start, lemin.end, &paths));
 	if (list_len(&paths) <= 0)
 		FATAL("Found no possible path\n");
-	/*
- 	fprintf(stderr, "Possible paths are:\n");
-	paths_show(&paths);
-	*/
-	//fprintf(stderr, "Cross roads\n");
 	cross_roads(&paths, lemin.end, lemin.ant_count);
 	rooms_del(&lemin.rooms);
 	return (true);
 }
 
-int			main()
+int			main(void)
 {
 	return (lemin() == true ? 0 : 1);
 }
